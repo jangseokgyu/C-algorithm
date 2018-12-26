@@ -7,7 +7,7 @@ int main() {
   for(int i =0;i<index;i++) {
     int min = i;
     for(int j = i+1; j<index;j++) {
-      if(sort[min] > sort[j])
+      if(sort[min] > sort[j]) // 여기가 왜 i가 아니라 min인지 이해가 안됨..
          min = j;
     }
 
