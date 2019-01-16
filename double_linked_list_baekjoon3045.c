@@ -138,16 +138,18 @@ void print(DLL *list) {
 }
 
 int sorting(DLL* list,int size) {
-  int i,count=0,tempi;
-  for(i=0;i<size;i++){
+  int count=0,j=0,tempi;
+  for(int i=0;i<size;i++){
     if((i+1) != (tempi=search(list,i))){
-      insertAt(list,tempi,newnode(tempi));
-      print(list);
-      deleteAt(list,i);
-      print(list);
-      count++;
+        insertAt(list, i, newnode(i+1));
+        print(list);
+        j=i+1;
+    while(search(list,j) != i+1){
+          j++;
+        }
+        deleteAt(list,j);
+        count++;
     }
-    printf("%d\n",i);
   }
   return count;
 }
