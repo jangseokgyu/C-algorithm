@@ -77,10 +77,6 @@ void insertAt(DLL *list, int index, Node *newnode) {
 		temp->next = newnode;
 		list->size++;
 	}
-	/*
-	if (temp->next != NULL)
-		temp->next->prev = temp;
-		*/
 }
 
 void deleteAt(DLL *list, int index) {
@@ -132,27 +128,39 @@ void print(DLL *list) {
 	}
 	printf("\n");
 }
+
 int main() {
-	DLL *list = newDLL();
-  unsigned int i,m,n,num1,num2;
+  int i,m,n,num1,num2;
   char c;
-  scanf("%u%u",&n,&m);
+
+	DLL *list = newDLL();
+  print(list);
+  printf("입력하시오");
+	scanf(" %d%d",&n,&m);
+  scanf("%*c");
 	for (i = 1; i < n+1; i++) {
 		append(list, newnode(i));
 	}
+  fflush(stdin);
 	print(list);
-
+  
   while(m--) {
-    scanf("%*c%c%*c%u%*c%u%*c", &c, &num1, &num2);
-    fflush(stdin);
-    printf("%c %u %u\n",c,num1,num2);
+    printf("\n입력하시오\n");
+    scanf(" %c%d%d", &c, &num1, &num2);
+    scanf("%*c");
+
+    printf("%c %d %d\n",c,num1,num2);
     if(c == 'A'){
       insertAt(list,num2-1,newnode(num1));
-      deleteAt(list,num1);
+      if(num1>num2)
+        deleteAt(list,num1);
+      else
+        deleteAt(list,num1-1);
+
       print(list);
     }
     else {
-      insertAt(list,num2+1,newnode(num1));
+      insertAt(list,num2,newnode(num1));
       deleteAt(list,num1-1);
       print(list);
     }
