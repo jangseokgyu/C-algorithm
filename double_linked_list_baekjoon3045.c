@@ -137,6 +137,15 @@ void print(DLL *list) {
 	printf("\n");
 }
 
+void sorting(DLL* list,int size) {
+  int i,j;
+  for(i=0;i<size;i++){
+    for(j=i;j<size;j++) {
+      
+    }
+  }
+}
+
 int main() {
   int i,m,n,num1,num2;
   char c;
@@ -178,6 +187,7 @@ int main() {
       print(list);
     }
   }
+  sorting(list,list->size);
 
 	return 0;
 }
