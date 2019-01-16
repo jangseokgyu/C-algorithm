@@ -7,12 +7,10 @@ typedef struct Node {
 	struct Node *prev;
 	struct Node *next;
 } Node;
-
 typedef struct {
 	Node *head;
 	int size;
 } DLL;
-
 Node *newnode(int n)
 {
 	Node *temp = (Node *)malloc(sizeof(Node));
@@ -21,14 +19,12 @@ Node *newnode(int n)
 	temp->next = NULL;
 	return temp;
 }
-
 DLL *newDLL() {
 	DLL *temp = (DLL *)malloc(sizeof(DLL));
 	temp->head = NULL;
 	temp->size = 0;
 	return temp;
 }
-
 int search(DLL *list, int num) {
   struct Node* temp = list->head;
   while(num--)
@@ -36,7 +32,6 @@ int search(DLL *list, int num) {
   
   return (temp->val);
 }
-
 void append(DLL *list, Node *newnode) {
 	struct Node* temp = list->head;
 	struct Node* newNode = newnode;
@@ -52,15 +47,9 @@ void append(DLL *list, Node *newnode) {
 	temp->next = newNode;
 	newNode->prev = temp;
 }
-
 void insertAt(DLL *list, int index, Node *newnode) {
-
 	struct Node* temp = list->head;
-
-	if (index < 0 || index > list->size) {
-		printf("INSERT ERROR: Out of Bound\n");
-	}
-	else if (index == 0) {
+	if (index == 0) {
 		newnode->next = list->head;
 		list->head->prev = newnode;
 		list->head = newnode;
@@ -79,7 +68,6 @@ void insertAt(DLL *list, int index, Node *newnode) {
 		for (int i = 0; i < index - 1; i++) {
 			temp = temp->next;
 		}
-
 		newnode->prev = temp;
 		newnode->next = temp->next;
 		temp->next->prev = newnode;
@@ -87,16 +75,9 @@ void insertAt(DLL *list, int index, Node *newnode) {
 		list->size++;
 	}
 }
-
 void deleteAt(DLL *list, int index) {
-	//save reference to first link
-
 	struct Node* temp = list->head;
-
-	if (index < 0 || index >= list->size) {
-		printf("DELETE ERROR: Out of Bound\n");
-	}
-	else if (index == 0) {
+	if (index == 0) {
 		temp->next->prev = NULL;
 		list->head = temp->next;
 		list->size--;
@@ -109,46 +90,20 @@ void deleteAt(DLL *list, int index) {
 
 		list->size--;
 	}
-
 	else {
 		for (int i = 0; i < index; i++) {
 			temp = temp->next;
 		}
-
 		temp->prev->next = temp->next;
 		temp->next->prev = temp->prev;
-
 		list->size--;
 	}
-
-}
-
-void print(DLL *list) {
-	struct Node* temp = list->head;
-	while (temp != NULL) {
-		printf("[%d] ", temp->val);
-		temp = temp->next;
-	}
-	printf("\n");
 }
 
 void sorting(DLL* list,int size) {
-  int count=0,j=0,tempi;
-  for(int i=0;i<size;i++){
-    if((i+1) != (tempi=search(list,i))){
-        insertAt(list, i, newnode(i+1));
-        j=i+1;
-    while(search(list,j) != i+1){
-          j++;
-        }
-        deleteAt(list,j);
-        count++;
+  char* str = (char*)malloc(sizeof(size*size));
+  char* s1 = (char*)malloc(sizeof(size*size));
 
-        printf("A %d %d\n",j,i+1);
-    }
-  }
-}
-void sortingcount(DLL* list,int size) {
   int count=0,j=0,tempi;
   for(int i=0;i<size;i++){
     if((i+1) != (tempi=search(list,i))){
@@ -159,25 +114,25 @@ void sortingcount(DLL* list,int size) {
         }
         deleteAt(list,j);
         count++;
+        sprintf(s1,"A %d %d\n",j,j+1);
+        strcat(str,s1);
     }
   }
   printf("%d\n",count);
+  puts(str);
+  free(str);
+  free(s1);
 }
-
 int main() {
-
   int i,m,n,num1,num2;
   char c;
-
 	DLL *list = newDLL();
   DLL *list2 = newDLL();
-
 	scanf(" %d%d",&n,&m);
   scanf("%*c");
 	for (i = 1; i < n+1; i++) {
 		append(list, newnode(i));
 	}
-
   while(m--) {
     scanf(" %c%d%d", &c, &num1, &num2);
     scanf("%*c");
@@ -199,13 +154,10 @@ int main() {
     }
   }
   struct Node* temp = list->head;
-
   for (i = 1; i < n+1; i++) {
 		append(list2, newnode(temp->val));
     temp = temp->next;
 	}
-  sortingcount(list2,list2->size);
   sorting(list,list->size);
-  
 	return 0;
 }
