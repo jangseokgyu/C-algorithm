@@ -137,13 +137,19 @@ void print(DLL *list) {
 	printf("\n");
 }
 
-void sorting(DLL* list,int size) {
-  int i,j;
+int sorting(DLL* list,int size) {
+  int i,count=0,tempi;
   for(i=0;i<size;i++){
-    for(j=i;j<size;j++) {
-      
+    if((i+1) != (tempi=search(list,i))){
+      insertAt(list,tempi,newnode(tempi));
+      print(list);
+      deleteAt(list,i);
+      print(list);
+      count++;
     }
+    printf("%d\n",i);
   }
+  return count;
 }
 
 int main() {
@@ -187,7 +193,7 @@ int main() {
       print(list);
     }
   }
-  sorting(list,list->size);
+  printf("%d\n",sorting(list,list->size));
 
 	return 0;
 }
