@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Node {
 	int val;
@@ -105,7 +106,6 @@ void deleteAt(DLL *list, int index) {
 			temp = temp->next;
 		}
 		temp->prev->next = NULL;
-		free(temp);
 
 		list->size--;
 	}
@@ -117,19 +117,14 @@ void deleteAt(DLL *list, int index) {
 
 		temp->prev->next = temp->next;
 		temp->next->prev = temp->prev;
-		free(temp);
 
 		list->size--;
 	}
-	/*if (temp->next != NULL)
-		temp->next->prev = temp;
-		*/
 
 }
 
 void print(DLL *list) {
 	struct Node* temp = list->head;
-	printf("Forward: ");
 	while (temp != NULL) {
 		printf("[%d] ", temp->val);
 		temp = temp->next;
@@ -137,7 +132,7 @@ void print(DLL *list) {
 	printf("\n");
 }
 
-int sorting(DLL* list,int size) {
+void sorting(DLL* list,int size) {
   int count=0,j=0,tempi;
   for(int i=0;i<size;i++){
     if((i+1) != (tempi=search(list,i))){
@@ -148,33 +143,44 @@ int sorting(DLL* list,int size) {
         }
         deleteAt(list,j);
         count++;
+
         printf("A %d %d\n",j,i+1);
     }
   }
-  return count;
+}
+void sortingcount(DLL* list,int size) {
+  int count=0,j=0,tempi;
+  for(int i=0;i<size;i++){
+    if((i+1) != (tempi=search(list,i))){
+        insertAt(list, i, newnode(i+1));
+        j=i+1;
+    while(search(list,j) != i+1){
+          j++;
+        }
+        deleteAt(list,j);
+        count++;
+    }
+  }
+  printf("%d\n",count);
 }
 
 int main() {
+
   int i,m,n,num1,num2;
   char c;
 
 	DLL *list = newDLL();
-  print(list);
-  printf("입력하시오");
+  DLL *list2 = newDLL();
+
 	scanf(" %d%d",&n,&m);
   scanf("%*c");
 	for (i = 1; i < n+1; i++) {
 		append(list, newnode(i));
 	}
-  fflush(stdin);
-	print(list);
-  
+
   while(m--) {
-    printf("\n입력하시오\n");
     scanf(" %c%d%d", &c, &num1, &num2);
     scanf("%*c");
-
-    printf("%c %d %d\n",c,num1,num2);
     if(c == 'A'){
       insertAt(list,num2-1,newnode(search(list,num1-1)));
       if(num1>num2)
@@ -192,9 +198,14 @@ int main() {
       }
     }
   }
-  print(list);
-  printf("%d\n",sorting(list,list->size));
-  print(list);
+  struct Node* temp = list->head;
+
+  for (i = 1; i < n+1; i++) {
+		append(list2, newnode(temp->val));
+    temp = temp->next;
+	}
+  sortingcount(list2,list2->size);
+  sorting(list,list->size);
+  
 	return 0;
 }
-
