@@ -28,6 +28,14 @@ DLL *newDLL() {
 	return temp;
 }
 
+int search(DLL *list, int num) {
+  struct Node* temp = list->head;
+  while(num--)
+    temp = temp->next;
+  
+  return (temp->val);
+}
+
 void append(DLL *list, Node *newnode) {
 	struct Node* temp = list->head;
 	struct Node* newNode = newnode;
@@ -151,7 +159,7 @@ int main() {
 
     printf("%c %d %d\n",c,num1,num2);
     if(c == 'A'){
-      insertAt(list,num2-1,newnode(num1));
+      insertAt(list,num2-1,newnode(search(list,num1-1)));
       if(num1>num2)
         deleteAt(list,num1);
       else
@@ -160,8 +168,13 @@ int main() {
       print(list);
     }
     else {
-      insertAt(list,num2,newnode(num1));
-      deleteAt(list,num1-1);
+      insertAt(list,num2,newnode(search(list,num1-1)));
+      if(num1<num2){
+        deleteAt(list,num1-1);
+      }
+      else {
+        deleteAt(list,num1);
+      }
       print(list);
     }
   }
