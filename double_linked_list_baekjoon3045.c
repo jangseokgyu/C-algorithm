@@ -142,13 +142,13 @@ int sorting(DLL* list,int size) {
   for(int i=0;i<size;i++){
     if((i+1) != (tempi=search(list,i))){
         insertAt(list, i, newnode(i+1));
-        print(list);
         j=i+1;
     while(search(list,j) != i+1){
           j++;
         }
         deleteAt(list,j);
         count++;
+        printf("A %d %d\n",j,i+1);
     }
   }
   return count;
@@ -181,8 +181,6 @@ int main() {
         deleteAt(list,num1);
       else
         deleteAt(list,num1-1);
-
-      print(list);
     }
     else {
       insertAt(list,num2,newnode(search(list,num1-1)));
@@ -192,10 +190,11 @@ int main() {
       else {
         deleteAt(list,num1);
       }
-      print(list);
     }
   }
+  print(list);
   printf("%d\n",sorting(list,list->size));
-
+  print(list);
 	return 0;
 }
+
